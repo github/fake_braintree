@@ -96,23 +96,42 @@ describe 'Braintree::Subscription.find' do
 
   it 'returns add-ons added with the subscription' do
     add_on_id = 'def456'
-    subscription_id = create_subscription(add_ons: { add: [{ inherited_from_id: add_on_id, amount: 10.50 }] }).subscription.id
+    subscription_id = create_subscription(add_ons: {
+        add: [
+          {
+            inherited_from_id: add_on_id,
+            amount: 10.50,
+            number_of_billing_cycles: 2
+          }
+        ]
+      }).subscription.id
+
     subscription = Braintree::Subscription.find(subscription_id)
     add_ons = subscription.add_ons
     expect(add_ons.size).to eq 1
     expect(add_ons.first.id).to eq add_on_id
     expect(add_ons.first.amount).to eq 10.50
+    expect(add_ons.first.number_of_billing_cycles).to eq 2
   end
 
   it 'updates existing add-ons' do
     add_on_id = 'def456'
     subscription_id = create_subscription(add_ons: { add: [{ inherited_from_id: add_on_id, quantity: 2 }] }).subscription.id
-    update_subscription(subscription_id, add_ons: { update: [{ existing_id: add_on_id, quantity: 5 }] })
+    update_subscription(subscription_id, add_ons: {
+      update: [
+        {
+          existing_id: add_on_id,
+          quantity: 5,
+          number_of_billing_cycles: 2
+        }
+      ]
+    })
+
     subscription = Braintree::Subscription.find(subscription_id)
     add_ons = subscription.add_ons
     expect(add_ons.size).to eq 1
     expect(add_ons.first.id).to eq add_on_id
-    expect(add_ons.first.quantity).to eq 5
+    expect(add_ons.first.number_of_billing_cycles).to eq 2
   end
 
   it 'returns discounts added with the subscription' do

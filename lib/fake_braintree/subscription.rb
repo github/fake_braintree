@@ -86,7 +86,8 @@ module FakeBraintree
           {
             'id'       => hsh['inherited_from_id'],
             'quantity' => hsh['quantity'],
-            'amount'   => hsh['amount']
+            'amount'   => hsh['amount'],
+            'number_of_billing_cycles' => hsh['number_of_billing_cycles']
           }
         end
       elsif discount_or_add_on['update']
@@ -94,7 +95,8 @@ module FakeBraintree
           {
             'id'       => hsh['existing_id'],
             'quantity' => hsh['quantity'],
-            'amount'   => hsh['amount']
+            'amount'   => hsh['amount'],
+            'number_of_billing_cycles' => hsh['number_of_billing_cycles']
           }
         end
       else
