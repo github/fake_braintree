@@ -193,5 +193,10 @@ module FakeBraintree
       redirect = FakeBraintree.registry.redirects[params[:id]]
       redirect.confirm
     end
+
+    # Braintree::AddOn.all
+    get '/merchants/:merchant_id/add_ons' do
+      gzipped_response(200, [].to_xml(root: 'add_ons'))
+    end
   end
 end
